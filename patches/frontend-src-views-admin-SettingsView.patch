@@ -1,5 +1,5 @@
 --- sub2api/frontend/src/views/admin/SettingsView.vue	2026-03-24 10:36:09
-+++ /Users/dex/YD 2026/sub2api HUB/sub2api/frontend/src/views/admin/SettingsView.vue	2026-03-24 09:59:48
++++ /Users/dex/YD 2026/sub2api HUB/sub2api/frontend/src/views/admin/SettingsView.vue	2026-03-24 12:19:41
 @@ -1248,81 +1248,6 @@
                </p>
              </div>
@@ -82,6 +82,61 @@
              <!-- Contact Info -->
              <div>
                <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+@@ -1370,8 +1295,8 @@
+               />
+             </div>
+ 
+-            <!-- Home Content -->
+-            <div>
++            <!-- Home Content (hidden for DexAPI) -->
++            <div v-show="false">
+               <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                 {{ t('admin.settings.site.homeContent') }}
+               </label>
+@@ -1390,8 +1315,8 @@
+               </p>
+             </div>
+ 
+-            <!-- Hide CCS Import Button -->
+-            <div
++            <!-- Hide CCS Import Button (hidden for DexAPI) -->
++            <div v-show="false"
+               class="flex items-center justify-between border-t border-gray-100 pt-4 dark:border-dark-700"
+             >
+               <div>
+@@ -1407,8 +1332,8 @@
+           </div>
+         </div>
+ 
+-        <!-- Purchase Subscription Page -->
+-        <div class="card">
++        <!-- Purchase Subscription Page (hidden for DexAPI) -->
++        <div class="card" v-show="false">
+           <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
+             <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
+               {{ t('admin.settings.purchase.title') }}
+@@ -1472,8 +1397,8 @@
+           </div>
+         </div>
+ 
+-        <!-- Sora Client Toggle -->
+-        <div class="card">
++        <!-- Sora Client Toggle (hidden for DexAPI) -->
++        <div class="card" v-show="false">
+           <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
+             <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
+               {{ t('admin.settings.soraClient.title') }}
+@@ -1497,8 +1422,8 @@
+           </div>
+         </div>
+ 
+-        <!-- Custom Menu Items -->
+-        <div class="card">
++        <!-- Custom Menu Items (hidden for DexAPI) -->
++        <div class="card" v-show="false">
+           <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
+             <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
+               {{ t('admin.settings.customMenu.title') }}
 @@ -1914,12 +1839,7 @@
  const activeTab = ref<SettingsTab>('general')
  const settingsTabs = [

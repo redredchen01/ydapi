@@ -1,5 +1,5 @@
 --- sub2api/frontend/src/components/layout/AppHeader.vue	2026-03-24 10:36:09
-+++ /Users/dex/YD 2026/sub2api HUB/sub2api/frontend/src/components/layout/AppHeader.vue	2026-03-23 18:01:46
++++ /Users/dex/YD 2026/sub2api HUB/sub2api/frontend/src/components/layout/AppHeader.vue	2026-03-24 12:22:42
 @@ -23,8 +23,7 @@
  
        <!-- Right: Announcements + Docs + Language + Subscriptions + Balance + User Dropdown -->
@@ -10,14 +10,18 @@
  
          <!-- Docs Link -->
          <a
-@@ -41,32 +40,8 @@
-         <!-- Language Switcher -->
-         <LocaleSwitcher />
+@@ -38,34 +37,10 @@
+           <span class="hidden sm:inline">{{ t('nav.docs') }}</span>
+         </a>
+ 
+-        <!-- Language Switcher -->
+-        <LocaleSwitcher />
++        <!-- Language Switcher (hidden for DexAPI) -->
++        <LocaleSwitcher v-show="false" />
  
 -        <!-- Subscription Progress (for users with active subscriptions) -->
 -        <SubscriptionProgressMini v-if="user" />
-+        <!-- Balance and subscriptions removed for DexAPI -->
- 
+-
 -        <!-- Balance Display -->
 -        <div
 -          v-if="user"
@@ -40,10 +44,10 @@
 -            ${{ user.balance?.toFixed(2) || '0.00' }}
 -          </span>
 -        </div>
--
++        <!-- Balance and subscriptions removed for DexAPI -->
+ 
          <!-- User Dropdown -->
          <div v-if="user" class="relative" ref="dropdownRef">
-           <button
 @@ -101,16 +76,6 @@
                  <div class="text-xs text-gray-500 dark:text-dark-400">{{ user.email }}</div>
                </div>
