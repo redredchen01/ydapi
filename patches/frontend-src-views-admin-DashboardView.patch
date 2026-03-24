@@ -1,0 +1,25 @@
+--- sub2api/frontend/src/views/admin/DashboardView.vue	2026-03-24 10:36:09
++++ /Users/dex/YD 2026/sub2api HUB/sub2api/frontend/src/views/admin/DashboardView.vue	2026-03-24 12:06:17
+@@ -74,18 +74,18 @@
+             </div>
+           </div>
+ 
+-          <!-- New Users Today -->
++          <!-- Active Accounts -->
+           <div class="card p-4">
+             <div class="flex items-center gap-3">
+               <div class="rounded-lg bg-emerald-100 p-2 dark:bg-emerald-900/30">
+-                <Icon name="userPlus" size="md" class="text-emerald-600 dark:text-emerald-400" :stroke-width="2" />
++                <Icon name="check" size="md" class="text-emerald-600 dark:text-emerald-400" :stroke-width="2" />
+               </div>
+               <div>
+                 <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
+-                  {{ t('admin.dashboard.users') }}
++                  {{ t('admin.dashboard.activeUsers') }}
+                 </p>
+                 <p class="text-xl font-bold text-emerald-600 dark:text-emerald-400">
+-                  +{{ stats.today_new_users }}
++                  {{ stats.active_users }}
+                 </p>
+                 <p class="text-xs text-gray-500 dark:text-gray-400">
+                   {{ t('common.total') }}: {{ formatNumber(stats.total_users) }}

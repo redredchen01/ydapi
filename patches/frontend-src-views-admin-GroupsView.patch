@@ -1,0 +1,15 @@
+--- sub2api/frontend/src/views/admin/GroupsView.vue	2026-03-24 10:36:09
++++ /Users/dex/YD 2026/sub2api HUB/sub2api/frontend/src/views/admin/GroupsView.vue	2026-03-24 12:06:01
+@@ -1864,12 +1864,7 @@
+ const columns = computed<Column[]>(() => [
+   { key: 'name', label: t('admin.groups.columns.name'), sortable: true },
+   { key: 'platform', label: t('admin.groups.columns.platform'), sortable: true },
+-  { key: 'billing_type', label: t('admin.groups.columns.billingType'), sortable: true },
+-  { key: 'rate_multiplier', label: t('admin.groups.columns.rateMultiplier'), sortable: true },
+-  { key: 'is_exclusive', label: t('admin.groups.columns.type'), sortable: true },
+   { key: 'account_count', label: t('admin.groups.columns.accounts'), sortable: true },
+-  { key: 'capacity', label: t('admin.groups.columns.capacity'), sortable: false },
+-  { key: 'usage', label: t('admin.groups.columns.usage'), sortable: false },
+   { key: 'status', label: t('admin.groups.columns.status'), sortable: true },
+   { key: 'actions', label: t('admin.groups.columns.actions'), sortable: false }
+ ])
