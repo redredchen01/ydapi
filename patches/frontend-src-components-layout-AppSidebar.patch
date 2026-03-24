@@ -1,5 +1,5 @@
---- /Users/dex/YD 2026/dexapi/sub2api/frontend/src/components/layout/AppSidebar.vue	2026-03-24 10:36:09
-+++ /Users/dex/YD 2026/sub2api HUB/sub2api/frontend/src/components/layout/AppSidebar.vue	2026-03-24 10:06:35
+--- sub2api/frontend/src/components/layout/AppSidebar.vue	2026-03-24 10:36:09
++++ /Users/dex/YD 2026/sub2api HUB/sub2api/frontend/src/components/layout/AppSidebar.vue	2026-03-24 10:37:33
 @@ -55,12 +55,9 @@
            </router-link>
          </div>
@@ -38,15 +38,10 @@
  const UserIcon = {
    render: () =>
      h(
-@@ -252,21 +234,6 @@
-           'stroke-linecap': 'round',
-           'stroke-linejoin': 'round',
-           d: 'M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z'
--        })
--      ]
--    )
--}
--
+@@ -257,21 +239,6 @@
+     )
+ }
+ 
 -const UsersIcon = {
 -  render: () =>
 -    h(
@@ -57,13 +52,23 @@
 -          'stroke-linecap': 'round',
 -          'stroke-linejoin': 'round',
 -          d: 'M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z'
-         })
-       ]
-     )
-@@ -287,46 +254,6 @@
-     )
- }
- 
+-        })
+-      ]
+-    )
+-}
+-
+ const FolderIcon = {
+   render: () =>
+     h(
+@@ -282,46 +249,6 @@
+           'stroke-linecap': 'round',
+           'stroke-linejoin': 'round',
+           d: 'M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z'
+-        })
+-      ]
+-    )
+-}
+-
 -const CreditCardIcon = {
 -  render: () =>
 -    h(
@@ -99,14 +104,9 @@
 -        }),
 -        h('path', {
 -          d: 'M512 736c-17.7 0-32-14.3-32-32V448c0-17.7 14.3-32 32-32s32 14.3 32 32v256c0 17.7-14.3 32-32 32zM896 992H512c-17.7 0-32-14.3-32-32s14.3-32 32-32h306.8l-73.4-73.4c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l128 128c9.2 9.2 11.9 22.9 6.9 34.9S908.9 992 896 992z'
--        })
--      ]
--    )
--}
--
- const GlobeIcon = {
-   render: () =>
-     h(
+         })
+       ]
+     )
 @@ -342,51 +269,6 @@
      )
  }
@@ -159,15 +159,10 @@
  const CogIcon = {
    render: () =>
      h(
-@@ -447,21 +329,6 @@
-           'stroke-linecap': 'round',
-           'stroke-linejoin': 'round',
-           d: 'm18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5'
--        })
--      ]
--    )
--}
--
+@@ -452,21 +334,6 @@
+     )
+ }
+ 
 -const SoraIcon = {
 -  render: () =>
 -    h(
@@ -178,10 +173,15 @@
 -          'stroke-linecap': 'round',
 -          'stroke-linejoin': 'round',
 -          d: 'M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z'
-         })
-       ]
-     )
-@@ -487,114 +354,29 @@
+-        })
+-      ]
+-    )
+-}
+-
+ const ChevronDoubleRightIcon = {
+   render: () =>
+     h(
+@@ -487,114 +354,32 @@
    const items: NavItem[] = [
      { path: '/dashboard', label: t('nav.dashboard'), icon: DashboardIcon },
      { path: '/keys', label: t('nav.apiKeys'), icon: KeyIcon },
@@ -266,9 +266,9 @@
 -  const baseItems: NavItem[] = [
 +  return [
      { path: '/admin/dashboard', label: t('nav.dashboard'), icon: DashboardIcon },
--    ...(adminSettingsStore.opsMonitoringEnabled
--      ? [{ path: '/admin/ops', label: t('nav.ops'), icon: ChartIcon }]
--      : []),
+     ...(adminSettingsStore.opsMonitoringEnabled
+       ? [{ path: '/admin/ops', label: t('nav.ops'), icon: ChartIcon }]
+       : []),
 -    { path: '/admin/users', label: t('nav.users'), icon: UsersIcon, hideInSimpleMode: true },
 -    { path: '/admin/groups', label: t('nav.groups'), icon: FolderIcon, hideInSimpleMode: true },
 -    { path: '/admin/subscriptions', label: t('nav.subscriptions'), icon: CreditCardIcon, hideInSimpleMode: true },

@@ -1,0 +1,11 @@
+--- sub2api/frontend/src/main.ts	2026-03-24 10:36:09
++++ /Users/dex/YD 2026/sub2api HUB/sub2api/frontend/src/main.ts	2026-03-24 10:41:09
+@@ -10,7 +10,7 @@
+   const savedTheme = localStorage.getItem('theme')
+   const shouldUseDark =
+     savedTheme === 'dark' ||
+-    (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)
++    (!savedTheme) // DexAPI: default to dark mode
+   document.documentElement.classList.toggle('dark', shouldUseDark)
+ }
+ 
