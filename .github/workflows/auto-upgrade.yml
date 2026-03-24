@@ -1,0 +1,68 @@
+name: Auto Upgrade
+
+on:
+  schedule:
+    # Check daily at 06:00 UTC (14:00 Asia/Shanghai)
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  check-and-upgrade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check upstream version
+        id: check
+        run: |
+          cd sub2api
+          OLD_SHA=$(git rev-parse HEAD)
+          git fetch origin main
+          NEW_SHA=$(git rev-parse origin/main)
+
+          if [ "$OLD_SHA" = "$NEW_SHA" ]; then
+            echo "No updates available"
+            echo "updated=false" >> "$GITHUB_OUTPUT"
+          else
+            OLD_VER=$(git show HEAD:backend/cmd/server/VERSION 2>/dev/null || echo "unknown")
+            NEW_VER=$(git show origin/main:backend/cmd/server/VERSION 2>/dev/null || echo "unknown")
+            echo "Update found: ${OLD_VER} -> ${NEW_VER}"
+            echo "updated=true" >> "$GITHUB_OUTPUT"
+            echo "old_ver=${OLD_VER}" >> "$GITHUB_OUTPUT"
+            echo "new_ver=${NEW_VER}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Update submodule
+        if: steps.check.outputs.updated == 'true'
+        run: |
+          cd sub2api
+          git checkout origin/main
+          cd ..
+          git add sub2api
+
+      - name: Test patches apply cleanly
+        if: steps.check.outputs.updated == 'true'
+        run: |
+          apt-get update && apt-get install -y patch
+          cd sub2api
+          for p in ../patches/*.patch; do
+            if [ -s "$p" ]; then
+              echo "Testing $(basename $p)..."
+              patch -p0 --dry-run --no-backup-if-mismatch < "$p" 2>&1 || echo "::warning::$(basename $p) has conflicts"
+            fi
+          done
+
+      - name: Commit and push upgrade
+        if: steps.check.outputs.updated == 'true'
+        env:
+          OLD_VER: ${{ steps.check.outputs.old_ver }}
+          NEW_VER: ${{ steps.check.outputs.new_ver }}
+        run: |
+          git config user.name "DexAPI Bot"
+          git config user.email "bot@dexapi.local"
+          git commit -m "chore: upgrade sub2api ${OLD_VER} -> ${NEW_VER}"
+          git push
