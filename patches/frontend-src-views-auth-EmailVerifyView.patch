@@ -1,0 +1,20 @@
+--- sub2api/frontend/src/views/auth/EmailVerifyView.vue	2026-03-24 10:36:09
++++ /Users/dex/YD 2026/sub2api HUB/sub2api/frontend/src/views/auth/EmailVerifyView.vue	2026-03-24 12:42:46
+@@ -212,7 +212,7 @@
+ // Public settings
+ const turnstileEnabled = ref<boolean>(false)
+ const turnstileSiteKey = ref<string>('')
+-const siteName = ref<string>('Sub2API')
++const siteName = ref<string>('YDAPI')
+ const registrationEmailSuffixWhitelist = ref<string[]>([])
+ 
+ // Turnstile for resend
+@@ -249,7 +249,7 @@
+     const settings = await getPublicSettings()
+     turnstileEnabled.value = settings.turnstile_enabled
+     turnstileSiteKey.value = settings.turnstile_site_key || ''
+-    siteName.value = settings.site_name || 'Sub2API'
++    siteName.value = settings.site_name || 'YDAPI'
+     registrationEmailSuffixWhitelist.value = normalizeRegistrationEmailSuffixWhitelist(
+       settings.registration_email_suffix_whitelist || []
+     )

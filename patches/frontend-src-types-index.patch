@@ -1,0 +1,30 @@
+--- sub2api/frontend/src/types/index.ts	2026-03-24 10:36:09
++++ /Users/dex/YD 2026/sub2api HUB/sub2api/frontend/src/types/index.ts	2026-03-24 12:42:46
+@@ -1,5 +1,5 @@
+ /**
+- * Core Type Definitions for Sub2API Frontend
++ * Core Type Definitions for YDAPI Frontend
+  */
+ 
+ // ==================== Common Types ====================
+@@ -84,12 +84,6 @@
+   sort_order: number
+ }
+ 
+-export interface CustomEndpoint {
+-  name: string
+-  endpoint: string
+-  description: string
+-}
+-
+ export interface PublicSettings {
+   registration_enabled: boolean
+   email_verify_enabled: boolean
+@@ -110,7 +104,6 @@
+   purchase_subscription_enabled: boolean
+   purchase_subscription_url: string
+   custom_menu_items: CustomMenuItem[]
+-  custom_endpoints: CustomEndpoint[]
+   linuxdo_oauth_enabled: boolean
+   sora_client_enabled: boolean
+   backend_mode_enabled: boolean

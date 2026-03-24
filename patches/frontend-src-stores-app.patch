@@ -1,0 +1,28 @@
+--- sub2api/frontend/src/stores/app.ts	2026-03-24 10:36:09
++++ /Users/dex/YD 2026/sub2api HUB/sub2api/frontend/src/stores/app.ts	2026-03-24 12:42:46
+@@ -24,7 +24,7 @@
+   // Public settings cache state
+   const publicSettingsLoaded = ref<boolean>(false)
+   const publicSettingsLoading = ref<boolean>(false)
+-  const siteName = ref<string>('Sub2API')
++  const siteName = ref<string>('YDAPI')
+   const siteLogo = ref<string>('')
+   const siteVersion = ref<string>('')
+   const contactInfo = ref<string>('')
+@@ -285,7 +285,7 @@
+    */
+   function applySettings(config: PublicSettings): void {
+     cachedPublicSettings.value = config
+-    siteName.value = config.site_name || 'Sub2API'
++    siteName.value = config.site_name || 'YDAPI'
+     siteLogo.value = config.site_logo || ''
+     siteVersion.value = config.version || ''
+     contactInfo.value = config.contact_info || ''
+@@ -330,7 +330,6 @@
+         purchase_subscription_enabled: false,
+         purchase_subscription_url: '',
+         custom_menu_items: [],
+-        custom_endpoints: [],
+         linuxdo_oauth_enabled: false,
+         sora_client_enabled: false,
+         backend_mode_enabled: false,

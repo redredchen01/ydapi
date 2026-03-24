@@ -1,0 +1,20 @@
+--- sub2api/frontend/src/views/setup/SetupWizardView.vue	2026-03-24 10:36:09
++++ /Users/dex/YD 2026/sub2api HUB/sub2api/frontend/src/views/setup/SetupWizardView.vue	2026-03-24 12:42:46
+@@ -131,7 +131,7 @@
+                 v-model="formData.database.dbname"
+                 type="text"
+                 class="input"
+-                placeholder="sub2api"
++                placeholder="ydapi"
+               />
+             </div>
+             <div>
+@@ -535,7 +535,7 @@
+     port: 5432,
+     user: 'postgres',
+     password: '',
+-    dbname: 'sub2api',
++    dbname: 'ydapi',
+     sslmode: 'disable'
+   },
+   redis: {

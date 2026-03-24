@@ -1,0 +1,15 @@
+--- sub2api/frontend/src/views/KeyUsageView.vue	2026-03-24 10:36:09
++++ /Users/dex/YD 2026/sub2api HUB/sub2api/frontend/src/views/KeyUsageView.vue	2026-03-24 12:42:46
+@@ -372,10 +372,10 @@
+ 
+ // ==================== Site Settings (same as HomeView) ====================
+ 
+-const siteName = computed(() => appStore.cachedPublicSettings?.site_name || appStore.siteName || 'Sub2API')
++const siteName = computed(() => appStore.cachedPublicSettings?.site_name || appStore.siteName || 'YDAPI')
+ const siteLogo = computed(() => appStore.cachedPublicSettings?.site_logo || appStore.siteLogo || '')
+ const docUrl = computed(() => appStore.cachedPublicSettings?.doc_url || appStore.docUrl || '')
+-const githubUrl = 'https://github.com/Wei-Shaw/sub2api'
++const githubUrl = '#'
+ 
+ // ==================== Theme (same as HomeView) ====================
+ 

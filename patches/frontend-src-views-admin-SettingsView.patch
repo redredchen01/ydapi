@@ -1,9 +1,10 @@
 --- sub2api/frontend/src/views/admin/SettingsView.vue	2026-03-24 10:36:09
-+++ /Users/dex/YD 2026/sub2api HUB/sub2api/frontend/src/views/admin/SettingsView.vue	2026-03-24 12:19:41
-@@ -1248,81 +1248,6 @@
++++ /Users/dex/YD 2026/sub2api HUB/sub2api/frontend/src/views/admin/SettingsView.vue	2026-03-24 12:43:04
+@@ -1247,82 +1247,7 @@
+                 {{ t('admin.settings.site.apiBaseUrlHint') }}
                </p>
              </div>
- 
+-
 -            <!-- Custom Endpoints -->
 -            <div>
 -              <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -12,7 +13,7 @@
 -              <p class="mb-3 text-xs text-gray-500 dark:text-gray-400">
 -                {{ t('admin.settings.site.customEndpoints.description') }}
 -              </p>
--
+ 
 -              <div class="space-y-3">
 -                <div
 -                  v-for="(ep, index) in form.custom_endpoints"
@@ -115,6 +116,15 @@
            <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
                {{ t('admin.settings.purchase.title') }}
+@@ -1456,7 +1381,7 @@
+                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+               </svg>
+               <a
+-                href="https://raw.githubusercontent.com/Wei-Shaw/sub2api/main/docs/ADMIN_PAYMENT_INTEGRATION_API.md"
++                href="#"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 class="text-blue-600 hover:underline dark:text-blue-400"
 @@ -1472,8 +1397,8 @@
            </div>
          </div>
@@ -150,6 +160,15 @@
  ]
  const { copyToClipboard } = useClipboard()
  
+@@ -2007,7 +1927,7 @@
+   default_balance: 0,
+   default_concurrency: 1,
+   default_subscriptions: [],
+-  site_name: 'Sub2API',
++  site_name: 'YDAPI',
+   site_logo: '',
+   site_subtitle: 'Subscription to API Conversion Platform',
+   api_base_url: '',
 @@ -2020,7 +1940,6 @@
    purchase_subscription_url: '',
    sora_client_enabled: false,

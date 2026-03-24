@@ -1,0 +1,13 @@
+--- sub2api/frontend/src/router/__tests__/title.spec.ts	2026-03-24 10:36:09
++++ /Users/dex/YD 2026/sub2api HUB/sub2api/frontend/src/router/__tests__/title.spec.ts	2026-03-24 12:43:04
+@@ -11,8 +11,8 @@
+   })
+ 
+   it('站点名为空时，回退默认站点名', () => {
+-    expect(resolveDocumentTitle('Dashboard', '')).toBe('Dashboard - Sub2API')
+-    expect(resolveDocumentTitle(undefined, '   ')).toBe('Sub2API')
++    expect(resolveDocumentTitle('Dashboard', '')).toBe('Dashboard - YDAPI')
++    expect(resolveDocumentTitle(undefined, '   ')).toBe('YDAPI')
+   })
+ 
+   it('站点名变更时仅影响后续路由标题计算', () => {

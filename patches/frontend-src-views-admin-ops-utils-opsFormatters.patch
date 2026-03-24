@@ -1,0 +1,11 @@
+--- sub2api/frontend/src/views/admin/ops/utils/opsFormatters.ts	2026-03-24 10:36:09
++++ /Users/dex/YD 2026/sub2api HUB/sub2api/frontend/src/views/admin/ops/utils/opsFormatters.ts	2026-03-24 12:43:04
+@@ -1,7 +1,7 @@
+ /**
+  * Ops 页面共享的格式化/样式工具。
+  *
+- * 目标：尽量对齐 `docs/sub2api` 备份版本的视觉表现（需求一致部分保持一致），
++ * 目标：尽量对齐 `docs/ydapi` 备份版本的视觉表现（需求一致部分保持一致），
+  * 同时避免引入额外 UI 依赖。
+  */
+ 

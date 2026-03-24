@@ -1,5 +1,5 @@
 --- sub2api/frontend/src/views/admin/AccountsView.vue	2026-03-24 10:36:09
-+++ /Users/dex/YD 2026/sub2api HUB/sub2api/frontend/src/views/admin/AccountsView.vue	2026-03-24 12:11:02
++++ /Users/dex/YD 2026/sub2api HUB/sub2api/frontend/src/views/admin/AccountsView.vue	2026-03-24 12:42:46
 @@ -18,102 +18,21 @@
              @create="showCreate = true"
            >
@@ -115,3 +115,12 @@
              </template>
            </AccountTableActions>
          </div>
+@@ -1176,7 +1095,7 @@
+           }
+     )
+     const timestamp = formatExportTimestamp()
+-    const filename = `sub2api-account-${timestamp}.json`
++    const filename = `ydapi-account-${timestamp}.json`
+     const blob = new Blob([JSON.stringify(dataPayload, null, 2)], { type: 'application/json' })
+     const url = URL.createObjectURL(blob)
+     const link = document.createElement('a')

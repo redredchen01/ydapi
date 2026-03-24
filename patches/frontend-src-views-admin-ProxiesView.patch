@@ -1,0 +1,11 @@
+--- sub2api/frontend/src/views/admin/ProxiesView.vue	2026-03-24 10:36:09
++++ /Users/dex/YD 2026/sub2api HUB/sub2api/frontend/src/views/admin/ProxiesView.vue	2026-03-24 12:42:46
+@@ -1699,7 +1699,7 @@
+           }
+     )
+     const timestamp = formatExportTimestamp()
+-    const filename = `sub2api-proxy-${timestamp}.json`
++    const filename = `ydapi-proxy-${timestamp}.json`
+     const blob = new Blob([JSON.stringify(dataPayload, null, 2)], { type: 'application/json' })
+     const url = URL.createObjectURL(blob)
+     const link = document.createElement('a')
