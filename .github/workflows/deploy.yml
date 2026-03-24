@@ -32,6 +32,8 @@ jobs:
           password: ${{ secrets.VPS_PASSWORD }}
           source: "dexapi-image.tar.gz"
           target: "/opt/dexapi/"
+          timeout: 120s
+          command_timeout: 30m
 
       - name: Load image and restart
         uses: appleboy/ssh-action@v1.0.3
@@ -39,6 +41,7 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: root
           password: ${{ secrets.VPS_PASSWORD }}
+          command_timeout: 10m
           script: |
             cd /opt/dexapi
             docker load < dexapi-image.tar.gz
