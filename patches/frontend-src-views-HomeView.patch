@@ -1,5 +1,5 @@
 --- sub2api/frontend/src/views/HomeView.vue	2026-03-24 10:36:09
-+++ /Users/dex/YD 2026/sub2api HUB/sub2api/frontend/src/views/HomeView.vue	2026-03-24 12:38:00
++++ /Users/dex/YD 2026/sub2api HUB/sub2api/frontend/src/views/HomeView.vue	2026-03-24 13:02:56
 @@ -48,8 +48,7 @@
  
          <!-- Nav Actions -->
@@ -24,7 +24,7 @@
 -            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{
 -              t('home.tags.subscriptionToApi')
 -            }}</span>
-+            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">Multi-Account Routing</span>
++            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">OAuth 订阅转 API</span>
            </div>
            <div
              class="inline-flex items-center gap-2.5 rounded-full border border-gray-200/50 bg-white/80 px-5 py-2.5 shadow-sm backdrop-blur-sm dark:border-dark-700/50 dark:bg-dark-800/80"
@@ -33,7 +33,7 @@
 -            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{
 -              t('home.tags.stickySession')
 -            }}</span>
-+            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">Load Balancing</span>
++            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">多帐号自动轮替</span>
            </div>
            <div
              class="inline-flex items-center gap-2.5 rounded-full border border-gray-200/50 bg-white/80 px-5 py-2.5 shadow-sm backdrop-blur-sm dark:border-dark-700/50 dark:bg-dark-800/80"
@@ -208,7 +208,7 @@
 -              class="rounded bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-gray-500 dark:bg-dark-700 dark:text-dark-400"
 -              >{{ t('home.providers.soon') }}</span
 -            >
-+            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">Usage Tracking</span>
++            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">Agent 驱动</span>
            </div>
          </div>
        </div>
