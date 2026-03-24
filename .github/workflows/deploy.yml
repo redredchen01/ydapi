@@ -1,0 +1,48 @@
+name: Build & Deploy DexAPI
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        run: |
+          docker build -t dexapi:latest -f Dockerfile .
+
+      - name: Save image as tar
+        run: |
+          docker save dexapi:latest | gzip > dexapi-image.tar.gz
+
+      - name: Deploy to VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: root
+          password: ${{ secrets.VPS_PASSWORD }}
+          source: "dexapi-image.tar.gz"
+          target: "/opt/dexapi/"
+
+      - name: Load image and restart
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: root
+          password: ${{ secrets.VPS_PASSWORD }}
+          script: |
+            cd /opt/dexapi
+            docker load < dexapi-image.tar.gz
+            rm -f dexapi-image.tar.gz
+            docker compose up -d
+            sleep 5
+            docker ps --format 'table {{.Names}}\t{{.Status}}' | grep sub2api

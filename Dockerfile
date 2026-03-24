@@ -6,13 +6,21 @@ ARG GOLANG_IMAGE=golang:1.26.1-alpine
 ARG ALPINE_IMAGE=alpine:3.21
 ARG POSTGRES_IMAGE=postgres:18-alpine
 
+# Stage 0: Apply patches
+FROM ${NODE_IMAGE} AS patcher
+RUN apk add --no-cache patch
+WORKDIR /src
+COPY sub2api/ sub2api/
+COPY patches/ patches/
+RUN for p in patches/*.patch; do [ -s "$p" ] && (cd sub2api && patch -p0 --no-backup-if-mismatch < "../$p" || true); done
+
 # Stage 1: Frontend
 FROM ${NODE_IMAGE} AS frontend-builder
 WORKDIR /app/frontend
 RUN corepack enable && corepack prepare pnpm@latest --activate
-COPY sub2api/frontend/package.json sub2api/frontend/pnpm-lock.yaml ./
+COPY --from=patcher /src/sub2api/frontend/package.json /src/sub2api/frontend/pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
-COPY sub2api/frontend/ ./
+COPY --from=patcher /src/sub2api/frontend/ ./
 RUN pnpm run build
 
 # Stage 2: Backend
