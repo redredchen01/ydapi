@@ -1,5 +1,5 @@
 --- sub2api/frontend/src/main.ts	2026-03-24 10:36:09
-+++ /Users/dex/YD 2026/sub2api HUB/sub2api/frontend/src/main.ts	2026-03-24 11:59:06
++++ /Users/dex/YD 2026/sub2api HUB/sub2api/frontend/src/main.ts	2026-03-24 12:37:46
 @@ -10,7 +10,7 @@
    const savedTheme = localStorage.getItem('theme')
    const shouldUseDark =
@@ -14,7 +14,7 @@
  
    // Set document title immediately after config is loaded
 -  if (appStore.siteName && appStore.siteName !== 'Sub2API') {
-+  if (appStore.siteName && appStore.siteName !== 'DexAPI') {
++  if (appStore.siteName && appStore.siteName !== 'YDAPI') {
      document.title = `${appStore.siteName} - AI API Gateway`
    }
  

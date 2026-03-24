@@ -1,5 +1,5 @@
 --- sub2api/frontend/src/router/index.ts	2026-03-24 10:36:09
-+++ /Users/dex/YD 2026/sub2api HUB/sub2api/frontend/src/router/index.ts	2026-03-24 11:59:21
++++ /Users/dex/YD 2026/sub2api HUB/sub2api/frontend/src/router/index.ts	2026-03-24 12:37:55
 @@ -115,7 +115,7 @@
    // ==================== User Routes ====================
    {
@@ -14,7 +14,7 @@
        ?? (authStore.isAdmin ? adminSettingsStore.customMenuItems.find((item) => item.id === id) : undefined)
      if (menuItem?.label) {
 -      const siteName = appStore.siteName || 'Sub2API'
-+      const siteName = appStore.siteName || 'DexAPI'
++      const siteName = appStore.siteName || 'YDAPI'
        document.title = `${menuItem.label} - ${siteName}`
      } else {
        document.title = resolveDocumentTitle(to.meta.title, appStore.siteName, to.meta.titleKey as string)
