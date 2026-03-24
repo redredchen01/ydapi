@@ -46,6 +46,8 @@ jobs:
             cd /opt/dexapi
             docker load < dexapi-image.tar.gz
             rm -f dexapi-image.tar.gz
-            docker compose up -d
-            sleep 5
+            docker compose up -d --force-recreate sub2api
+            sleep 10
             docker ps --format 'table {{.Names}}\t{{.Status}}' | grep sub2api
+            # Restore YDAPI brand settings after deploy
+            bash /opt/dexapi/scripts/init-settings.sh || true
