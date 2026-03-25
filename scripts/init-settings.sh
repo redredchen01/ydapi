@@ -31,15 +31,14 @@ svg='<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 80\" width=\"80\
 print(base64.b64encode(svg.encode()).decode())
 ")
 
-# Apply
-curl -s -X PUT "$YDAPI_URL/api/v1/admin/settings" \
+# Apply settings
+RESULT=$(curl -s -w "\n%{http_code}" -X PUT "$YDAPI_URL/api/v1/admin/settings" \
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
   -d "{
     \"site_name\":\"YDAPI\",
     \"site_subtitle\":\"Turn Your AI Subscriptions into API Power\",
     \"site_logo\":\"data:image/svg+xml;base64,$LOGO_B64\",
-    \"api_base_url\":\"https://187.77.133.54\",
     \"registration_enabled\":true,
     \"totp_enabled\":true,
     \"default_concurrency\":20,
@@ -49,6 +48,13 @@ curl -s -X PUT "$YDAPI_URL/api/v1/admin/settings" \
     \"fallback_model_anthropic\":\"claude-sonnet-4-20250514\",
     \"fallback_model_openai\":\"gpt-4.1\",
     \"fallback_model_gemini\":\"gemini-2.5-pro\"
-  }" > /dev/null 2>&1
+  }")
 
-echo "[$(date)] YDAPI settings applied"
+HTTP_CODE=$(echo "$RESULT" | tail -1)
+if [ "$HTTP_CODE" = "200" ]; then
+  echo "[$(date)] YDAPI settings applied"
+else
+  echo "[$(date)] YDAPI settings failed (HTTP $HTTP_CODE)"
+  echo "$RESULT" | head -1
+  exit 1
+fi
