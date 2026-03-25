@@ -241,7 +241,7 @@
  
  // GitHub URL
 -const githubUrl = 'https://github.com/Wei-Shaw/sub2api'
-+// githubUrl removed for DexAPI
++// githubUrl removed for YDAPI
  
  // Auth state
  const isAuthenticated = computed(() => authStore.isAuthenticated)

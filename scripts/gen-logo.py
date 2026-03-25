@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate a simple DexAPI logo as SVG"""
+"""Generate a simple YDAPI logo as SVG"""
 
 svg = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
   <defs>
@@ -9,7 +9,7 @@ svg = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" 
     </linearGradient>
   </defs>
   <rect width="80" height="80" rx="18" fill="url(#bg)"/>
-  <text x="40" y="54" font-family="system-ui,-apple-system,sans-serif" font-size="36" font-weight="700" fill="white" text-anchor="middle" letter-spacing="-1">Dx</text>
+  <text x="40" y="54" font-family="system-ui,-apple-system,sans-serif" font-size="36" font-weight="700" fill="white" text-anchor="middle" letter-spacing="-1">YD</text>
 </svg>'''
 
 with open('logo.svg', 'w') as f:

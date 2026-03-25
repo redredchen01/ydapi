@@ -89,7 +89,7 @@
  
 -            <!-- Home Content -->
 -            <div>
-+            <!-- Home Content (hidden for DexAPI) -->
++            <!-- Home Content (hidden for YDAPI) -->
 +            <div v-show="false">
                <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                  {{ t('admin.settings.site.homeContent') }}
@@ -100,7 +100,7 @@
  
 -            <!-- Hide CCS Import Button -->
 -            <div
-+            <!-- Hide CCS Import Button (hidden for DexAPI) -->
++            <!-- Hide CCS Import Button (hidden for YDAPI) -->
 +            <div v-show="false"
                class="flex items-center justify-between border-t border-gray-100 pt-4 dark:border-dark-700"
              >
@@ -111,7 +111,7 @@
  
 -        <!-- Purchase Subscription Page -->
 -        <div class="card">
-+        <!-- Purchase Subscription Page (hidden for DexAPI) -->
++        <!-- Purchase Subscription Page (hidden for YDAPI) -->
 +        <div class="card" v-show="false">
            <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
@@ -131,7 +131,7 @@
  
 -        <!-- Sora Client Toggle -->
 -        <div class="card">
-+        <!-- Sora Client Toggle (hidden for DexAPI) -->
++        <!-- Sora Client Toggle (hidden for YDAPI) -->
 +        <div class="card" v-show="false">
            <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
@@ -142,7 +142,7 @@
  
 -        <!-- Custom Menu Items -->
 -        <div class="card">
-+        <!-- Custom Menu Items (hidden for DexAPI) -->
++        <!-- Custom Menu Items (hidden for YDAPI) -->
 +        <div class="card" v-show="false">
            <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">

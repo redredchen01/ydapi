@@ -5,7 +5,7 @@
    const shouldUseDark =
      savedTheme === 'dark' ||
 -    (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)
-+    (!savedTheme) // DexAPI: default to dark mode
++    (!savedTheme) // YDAPI: default to dark mode
    document.documentElement.classList.toggle('dark', shouldUseDark)
  }
  

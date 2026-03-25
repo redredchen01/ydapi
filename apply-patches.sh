@@ -1,5 +1,5 @@
 #!/bin/bash
-# Apply DexAPI UI patches to sub2api source
+# Apply YDAPI UI patches to sub2api source
 set -e
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PATCHES_DIR="$SCRIPT_DIR/patches"

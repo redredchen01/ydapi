@@ -1,27 +1,27 @@
 #!/bin/bash
-# DexAPI Health Monitor with Telegram alerts
-# Usage: Add to cron: */5 * * * * /opt/dexapi/scripts/monitor.sh
+# YDAPI Health Monitor with Telegram alerts
+# Usage: Add to cron: */5 * * * * /opt/ydapi/scripts/monitor.sh
 #
-# Required env vars (set in /opt/dexapi/.env.monitor):
+# Required env vars (set in /opt/ydapi/.env.monitor):
 #   TELEGRAM_BOT_TOKEN=your_bot_token
 #   TELEGRAM_CHAT_ID=your_chat_id
-#   DEXAPI_URL=http://127.0.0.1:8080
-#   DEXAPI_TOKEN=your_admin_jwt_token (optional, for account checks)
+#   YDAPI_URL=http://127.0.0.1:8080
+#   YDAPI_TOKEN=your_admin_jwt_token (optional, for account checks)
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 ENV_FILE="${SCRIPT_DIR}/../.env.monitor"
-STATE_FILE="/tmp/dexapi-monitor-state"
+STATE_FILE="/tmp/ydapi-monitor-state"
 
 [ -f "$ENV_FILE" ] && source "$ENV_FILE"
 
-DEXAPI_URL="${DEXAPI_URL:-http://127.0.0.1:8080}"
+YDAPI_URL="${YDAPI_URL:-http://127.0.0.1:8080}"
 
 send_alert() {
     local msg="$1"
     if [ -n "$TELEGRAM_BOT_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
         curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             -d chat_id="$TELEGRAM_CHAT_ID" \
-            -d text="🚨 DexAPI Alert
+            -d text="🚨 YDAPI Alert
 $msg" \
             -d parse_mode="HTML" > /dev/null 2>&1
     fi
@@ -33,7 +33,7 @@ send_recovery() {
     if [ -n "$TELEGRAM_BOT_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
         curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             -d chat_id="$TELEGRAM_CHAT_ID" \
-            -d text="✅ DexAPI Recovery
+            -d text="✅ YDAPI Recovery
 $msg" \
             -d parse_mode="HTML" > /dev/null 2>&1
     fi
@@ -41,7 +41,7 @@ $msg" \
 }
 
 # Health check
-HEALTH=$(curl -s --connect-timeout 5 "${DEXAPI_URL}/health" 2>/dev/null)
+HEALTH=$(curl -s --connect-timeout 5 "${YDAPI_URL}/health" 2>/dev/null)
 PREV_STATE=$(cat "$STATE_FILE" 2>/dev/null || echo "ok")
 
 if echo "$HEALTH" | grep -q '"ok"'; then
@@ -58,9 +58,9 @@ else
 fi
 
 # Account error check (if token provided)
-if [ -n "$DEXAPI_TOKEN" ]; then
-    ERROR_ACCOUNTS=$(curl -s "${DEXAPI_URL}/api/v1/admin/accounts" \
-        -H "Authorization: Bearer $DEXAPI_TOKEN" 2>/dev/null | \
+if [ -n "$YDAPI_TOKEN" ]; then
+    ERROR_ACCOUNTS=$(curl -s "${YDAPI_URL}/api/v1/admin/accounts" \
+        -H "Authorization: Bearer $YDAPI_TOKEN" 2>/dev/null | \
         python3 -c "
 import sys,json
 try:

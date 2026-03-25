@@ -272,7 +272,7 @@
 -})
 -
 -// Admin navigation items
-+// Admin navigation items - DexAPI core only
++// Admin navigation items - YDAPI core only
  const adminNavItems = computed((): NavItem[] => {
 -  const baseItems: NavItem[] = [
 +  return [

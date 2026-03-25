@@ -4,8 +4,8 @@
 # Auto-runs on reboot via cron
 
 YDAPI_URL="${YDAPI_URL:-http://127.0.0.1:8080}"
-ADMIN_EMAIL="${ADMIN_EMAIL:-admin@sub2api.local}"
-ADMIN_PASS="${ADMIN_PASS:-DexApi@2026!Secure}"
+ADMIN_EMAIL="${ADMIN_EMAIL:-admin@ydapi.local}"
+ADMIN_PASS="${ADMIN_PASS:-YDAPI@2026!Secure}"
 
 # Wait for service
 for i in $(seq 1 30); do

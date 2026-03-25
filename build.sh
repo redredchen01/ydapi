@@ -1,10 +1,10 @@
 #!/bin/bash
-# Build DexAPI custom Docker image
+# Build YDAPI custom Docker image
 set -e
 
-IMAGE_NAME="dexapi"
+IMAGE_NAME="ydapi"
 TAG="${1:-latest}"
 
-echo "Building DexAPI image: ${IMAGE_NAME}:${TAG}"
+echo "Building YDAPI image: ${IMAGE_NAME}:${TAG}"
 docker build -t ${IMAGE_NAME}:${TAG} -f Dockerfile .
 echo "Done: ${IMAGE_NAME}:${TAG}"

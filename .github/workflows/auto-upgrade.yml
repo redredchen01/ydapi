@@ -62,7 +62,7 @@ jobs:
           OLD_VER: ${{ steps.check.outputs.old_ver }}
           NEW_VER: ${{ steps.check.outputs.new_ver }}
         run: |
-          git config user.name "DexAPI Bot"
-          git config user.email "bot@dexapi.local"
+          git config user.name "YDAPI Bot"
+          git config user.email "bot@ydapi.local"
           git commit -m "chore: upgrade sub2api ${OLD_VER} -> ${NEW_VER}"
           git push

@@ -1,16 +1,16 @@
 # Multi-VPS Deployment
 
-DexAPI supports deploying multiple instances sharing the same database for high availability.
+YDAPI supports deploying multiple instances sharing the same database for high availability.
 
 ## Architecture
 
 ```
                     ┌─── VPS 1 (Primary) ───┐
-Client → DNS/LB →  │  DexAPI + PostgreSQL   │
+Client → DNS/LB →  │  YDAPI + PostgreSQL   │
                     │  + Redis              │
                     └───────────────────────┘
                     ┌─── VPS 2 (Replica) ───┐
-                →   │  DexAPI               │
+                →   │  YDAPI               │
                     │  (connects to VPS1 DB) │
                     └───────────────────────┘
 ```
@@ -31,8 +31,8 @@ REDIS_PORT=6379
 3. Use a minimal compose file (no postgres/redis):
 ```yaml
 services:
-  sub2api:
-    image: dexapi:latest
+  ydapi:
+    image: ydapi:latest
     restart: unless-stopped
     ports:
       - "8080:8080"
@@ -61,4 +61,4 @@ services:
 - Both instances share the same database — all config changes are instant
 - Redis is used for caching and concurrency control — must be shared
 - Each instance maintains its own scheduler snapshot cache
-- No sticky session required between LB and DexAPI instances
+- No sticky session required between LB and YDAPI instances

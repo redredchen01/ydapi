@@ -2,13 +2,13 @@
 # Promote a registered user to admin and generate API keys for all groups
 # Usage: bash promote-admin.sh <user_email>
 #
-# Requires: DEXAPI_URL and ADMIN_TOKEN env vars, or edit defaults below
+# Requires: YDAPI_URL and ADMIN_TOKEN env vars, or edit defaults below
 
 set -e
 
-DEXAPI_URL="${DEXAPI_URL:-https://187.77.133.54}"
-ADMIN_EMAIL="${ADMIN_EMAIL:-admin@sub2api.local}"
-ADMIN_PASS="${ADMIN_PASS:-DexApi@2026!Secure}"
+YDAPI_URL="${YDAPI_URL:-https://187.77.133.54}"
+ADMIN_EMAIL="${ADMIN_EMAIL:-admin@ydapi.local}"
+ADMIN_PASS="${ADMIN_PASS:-YDAPI@2026!Secure}"
 CURL="curl -sk"
 
 EMAIL="$1"
@@ -18,13 +18,13 @@ if [ -z "$EMAIL" ]; then
 fi
 
 # Login as admin
-TOKEN=$($CURL -X POST "$DEXAPI_URL/api/v1/auth/login" \
+TOKEN=$($CURL -X POST "$YDAPI_URL/api/v1/auth/login" \
   -H 'Content-Type: application/json' \
   -d "{\"email\":\"$ADMIN_EMAIL\",\"password\":\"$ADMIN_PASS\"}" \
   | python3 -c "import sys,json; print(json.load(sys.stdin)['data']['access_token'])")
 
 # Find user by email
-USER_ID=$($CURL "$DEXAPI_URL/api/v1/admin/users?search=$EMAIL" \
+USER_ID=$($CURL "$YDAPI_URL/api/v1/admin/users?search=$EMAIL" \
   -H "Authorization: Bearer $TOKEN" \
   | python3 -c "
 import sys,json
@@ -42,7 +42,7 @@ fi
 echo "Found user ID: $USER_ID ($EMAIL)"
 
 # Promote to admin
-$CURL -X PUT "$DEXAPI_URL/api/v1/admin/users/$USER_ID" \
+$CURL -X PUT "$YDAPI_URL/api/v1/admin/users/$USER_ID" \
   -H "Authorization: Bearer $TOKEN" \
   -H 'Content-Type: application/json' \
   -d '{"role":"admin","concurrency":10}' > /dev/null
@@ -50,7 +50,7 @@ $CURL -X PUT "$DEXAPI_URL/api/v1/admin/users/$USER_ID" \
 echo "Promoted to admin"
 
 # Generate API keys for all groups
-USER_TOKEN=$($CURL -X POST "$DEXAPI_URL/api/v1/auth/login" \
+USER_TOKEN=$($CURL -X POST "$YDAPI_URL/api/v1/auth/login" \
   -H 'Content-Type: application/json' \
   -d "{\"email\":\"$EMAIL\",\"password\":\"__SKIP__\"}" 2>/dev/null \
   | python3 -c "import sys,json; print(json.load(sys.stdin).get('data',{}).get('access_token',''))" 2>/dev/null || echo "")
@@ -59,7 +59,7 @@ if [ -z "$USER_TOKEN" ]; then
   echo ""
   echo "API Keys need to be created by the user after login."
   echo "Or run as admin:"
-  echo "  The user should log in at $DEXAPI_URL and go to 'API Keys' to create keys."
+  echo "  The user should log in at $YDAPI_URL and go to 'API Keys' to create keys."
 else
   echo ""
   echo "API Keys:"
@@ -70,7 +70,7 @@ else
       3) gname="gemini" ;;
       4) gname="antigravity" ;;
     esac
-    KEY=$($CURL -X POST "$DEXAPI_URL/api/v1/keys" \
+    KEY=$($CURL -X POST "$YDAPI_URL/api/v1/keys" \
       -H "Authorization: Bearer $USER_TOKEN" \
       -H 'Content-Type: application/json' \
       -d "{\"name\":\"$gname\",\"group_id\":$gid}" \
@@ -81,4 +81,4 @@ fi
 
 echo ""
 echo "Done! User $EMAIL is now admin."
-echo "Next: They should log in at $DEXAPI_URL → 账号管理 → 添加账号 → OAuth 授权"
+echo "Next: They should log in at $YDAPI_URL → 账号管理 → 添加账号 → OAuth 授权"

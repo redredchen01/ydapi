@@ -6,7 +6,7 @@
        <div class="flex items-center gap-3">
 -        <!-- Announcement Bell -->
 -        <AnnouncementBell v-if="user" />
-+        <!-- Announcement Bell (removed for DexAPI) -->
++        <!-- Announcement Bell (removed for YDAPI) -->
  
          <!-- Docs Link -->
          <a
@@ -16,7 +16,7 @@
  
 -        <!-- Language Switcher -->
 -        <LocaleSwitcher />
-+        <!-- Language Switcher (hidden for DexAPI) -->
++        <!-- Language Switcher (hidden for YDAPI) -->
 +        <LocaleSwitcher v-show="false" />
  
 -        <!-- Subscription Progress (for users with active subscriptions) -->
@@ -44,7 +44,7 @@
 -            ${{ user.balance?.toFixed(2) || '0.00' }}
 -          </span>
 -        </div>
-+        <!-- Balance and subscriptions removed for DexAPI -->
++        <!-- Balance and subscriptions removed for YDAPI -->
  
          <!-- User Dropdown -->
          <div v-if="user" class="relative" ref="dropdownRef">

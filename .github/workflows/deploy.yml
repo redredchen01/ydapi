@@ -1,4 +1,4 @@
-name: Build & Deploy DexAPI
+name: Build & Deploy YDAPI
 
 on:
   push:
@@ -18,11 +18,11 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t dexapi:latest -f Dockerfile .
+          docker build -t ydapi:latest -f Dockerfile .
 
       - name: Save image as tar
         run: |
-          docker save dexapi:latest | gzip > dexapi-image.tar.gz
+          docker save ydapi:latest | gzip > ydapi-image.tar.gz
 
       - name: Deploy to VPS
         uses: appleboy/scp-action@v0.1.7
@@ -30,8 +30,8 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: root
           password: ${{ secrets.VPS_PASSWORD }}
-          source: "dexapi-image.tar.gz"
-          target: "/opt/dexapi/"
+          source: "ydapi-image.tar.gz"
+          target: "/opt/ydapi/"
           timeout: 120s
           command_timeout: 30m
 
@@ -43,11 +43,11 @@ jobs:
           password: ${{ secrets.VPS_PASSWORD }}
           command_timeout: 10m
           script: |
-            cd /opt/dexapi
-            docker load < dexapi-image.tar.gz
-            rm -f dexapi-image.tar.gz
-            docker compose up -d --force-recreate sub2api
+            cd /opt/ydapi
+            docker load < ydapi-image.tar.gz
+            rm -f ydapi-image.tar.gz
+            docker compose up -d --force-recreate ydapi
             sleep 10
-            docker ps --format 'table {{.Names}}\t{{.Status}}' | grep sub2api
+            docker ps --format 'table {{.Names}}\t{{.Status}}' | grep ydapi
             # Restore YDAPI brand settings after deploy
-            bash /opt/dexapi/scripts/init-settings.sh || true
+            bash /opt/ydapi/scripts/init-settings.sh || true

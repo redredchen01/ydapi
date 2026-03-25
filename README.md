@@ -45,7 +45,7 @@ export OPENAI_API_KEY=sk-YOUR_KEY
 ```
 Agent (Claude Code / Codex / Cursor)
   ↓ HTTPS
-YDAPI Gateway (OpenResty → sub2api)
+YDAPI Gateway
   ↓ Load Balance
 Account Pool (OAuth / API Key)
   ↓
@@ -63,8 +63,8 @@ Upstream AI APIs (Anthropic / OpenAI / Google)
 ## Deployment
 
 ```bash
-git clone https://github.com/redredchen01/dexapi.git
-cd dexapi
+git clone https://github.com/redredchen01/ydapi.git
+cd ydapi
 cp .env.example .env  # Edit with your settings
 bash deploy.sh
 ```
@@ -82,9 +82,9 @@ bash deploy.sh
 ## Management
 
 ```bash
-docker compose logs -f sub2api   # View logs
-docker compose restart sub2api   # Restart
-docker compose up -d --force-recreate sub2api  # Apply config changes
+docker compose logs -f ydapi   # View logs
+docker compose restart ydapi   # Restart
+docker compose up -d --force-recreate ydapi  # Apply config changes
 ```
 
 ## Automation
