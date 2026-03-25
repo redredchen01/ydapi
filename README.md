@@ -98,4 +98,4 @@ docker compose up -d --force-recreate ydapi  # Apply config changes
 
 ## License
 
-Based on [Sub2API](https://github.com/Wei-Shaw/sub2api) — MIT License
+MIT License
