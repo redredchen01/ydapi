@@ -1,66 +1,22 @@
 # YDAPI
 
-AI API Gateway for Agent-Driven Teams
+Turn multiple free OAuth accounts into one API key.
 
-Multi-account rotation with load balancing across Claude, GPT, Gemini — optimized for AI agent workloads.
+Bind your free Claude / GPT / Gemini OAuth subscriptions, YDAPI pools them behind a single API key with automatic rotation and load balancing.
 
-## Agent Quick Setup
-
-```bash
-# Claude Code
-bash scripts/setup-agent.sh claude sk-YOUR_KEY
-
-# Codex CLI / OpenAI
-bash scripts/setup-agent.sh openai sk-YOUR_KEY
-
-# Gemini
-bash scripts/setup-agent.sh gemini sk-YOUR_KEY
-```
-
-Or manually:
-
-```bash
-# Claude Code
-export ANTHROPIC_BASE_URL=https://YOUR_SERVER
-export ANTHROPIC_API_KEY=sk-YOUR_KEY
-
-# Codex CLI
-export OPENAI_BASE_URL=https://YOUR_SERVER/openai
-export OPENAI_API_KEY=sk-YOUR_KEY
-```
-
-## Features
-
-- Multi-account load balancing with weighted scheduling
-- Sticky sessions for agent context continuity
-- Auto-failover on account errors
-- 10-minute proxy timeout for long agent tasks
-- SSE streaming support
-- Real-time ops monitoring
-- Daily database backups
-- Auto-upgrade from upstream
-
-## Architecture
+## How It Works
 
 ```
-Agent (Claude Code / Codex / Cursor)
-  ↓ HTTPS
-YDAPI Gateway
-  ↓ Load Balance
-Account Pool (OAuth / API Key)
+You bind N free OAuth accounts (Claude Pro, ChatGPT Plus, Gemini...)
   ↓
-Upstream AI APIs (Anthropic / OpenAI / Google)
+YDAPI pools them together
+  ↓
+You get 1 API key
+  ↓
+Your agents use it like a normal API — YDAPI auto-rotates accounts behind the scenes
 ```
 
-## Team Onboarding
-
-1. Team member registers at `https://YOUR_SERVER`
-2. Admin promotes to admin: `bash scripts/promote-admin.sh user@email.com`
-3. Member adds OAuth accounts via dashboard
-4. Member creates API keys
-5. Member runs `setup-agent.sh` to configure their tools
-
-## Deployment
+## Quick Start
 
 ```bash
 git clone https://github.com/redredchen01/ydapi.git
@@ -69,15 +25,50 @@ cp .env.example .env  # Edit with your settings
 bash deploy.sh
 ```
 
-## Agent-Optimized Config
+Then:
+1. Login at `https://YOUR_SERVER`
+2. Add your OAuth accounts (Claude / GPT / Gemini)
+3. Create an API key
+4. Point your agent at YDAPI:
 
-| Setting | Value | Purpose |
-|---|---|---|
-| `GATEWAY_MAX_CONNS_PER_HOST` | 4096 | High concurrency |
-| `GATEWAY_SCHEDULING_STICKY_SESSION_WAIT_TIMEOUT` | 300s | Long agent sessions |
-| `SERVER_H2C_MAX_CONCURRENT_STREAMS` | 200 | Parallel requests |
-| `SERVER_MAX_REQUEST_BODY_SIZE` | 512MB | Large context windows |
-| `GATEWAY_FORCE_CODEX_CLI` | true | Codex CLI compatibility |
+```bash
+# Claude Code
+export ANTHROPIC_BASE_URL=https://YOUR_SERVER
+export ANTHROPIC_API_KEY=sk-YOUR_KEY
+
+# Codex CLI / OpenAI
+export OPENAI_BASE_URL=https://YOUR_SERVER/openai
+export OPENAI_API_KEY=sk-YOUR_KEY
+```
+
+Or use the setup script:
+
+```bash
+bash scripts/setup-agent.sh claude sk-YOUR_KEY
+bash scripts/setup-agent.sh openai sk-YOUR_KEY
+bash scripts/setup-agent.sh gemini sk-YOUR_KEY
+```
+
+## Features
+
+- **OAuth account pooling** — bind multiple free accounts, use as one
+- **Auto-rotation** — requests spread across accounts with load balancing
+- **Auto-failover** — if one account hits a limit, seamlessly switch to the next
+- **Sticky sessions** — agent conversations stay on the same account
+- **SSE streaming** — full streaming support for all providers
+- **Real-time monitoring** — see account status, usage, and errors live
+
+## Architecture
+
+```
+Agent (Claude Code / Codex / Cursor)
+  ↓ HTTPS
+YDAPI Gateway
+  ↓ Auto-Rotate
+OAuth Account Pool (Claude Pro / ChatGPT Plus / Gemini)
+  ↓
+Upstream AI APIs (Anthropic / OpenAI / Google)
+```
 
 ## Management
 
@@ -86,15 +77,6 @@ docker compose logs -f ydapi   # View logs
 docker compose restart ydapi   # Restart
 docker compose up -d --force-recreate ydapi  # Apply config changes
 ```
-
-## Automation
-
-| Schedule | Task |
-|---|---|
-| Every 5 min | Health monitoring + Telegram alerts |
-| Daily 03:00 | PostgreSQL backup (7-day retention) |
-| Daily 14:00 | Auto-check upstream updates |
-| Weekly Sun 04:00 | Docker image cleanup |
 
 ## License
 
