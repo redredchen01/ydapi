@@ -10,7 +10,7 @@
 
 set -e
 
-YDAPI_URL="https://187.77.133.54"
+YDAPI_URL="${YDAPI_URL:?Set YDAPI_URL (e.g. https://your-server)}"
 PLATFORM="${1:-}"
 API_KEY="${2:-}"
 

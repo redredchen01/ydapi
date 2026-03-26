@@ -4,8 +4,8 @@
 # Auto-runs on reboot via cron
 
 YDAPI_URL="${YDAPI_URL:-http://127.0.0.1:8080}"
-ADMIN_EMAIL="${ADMIN_EMAIL:-admin@ydapi.local}"
-ADMIN_PASS="${ADMIN_PASS:-YDAPI@2026!Secure}"
+ADMIN_EMAIL="${ADMIN_EMAIL:?Set ADMIN_EMAIL}"
+ADMIN_PASS="${ADMIN_PASS:?Set ADMIN_PASS}"
 
 # Wait for service
 for i in $(seq 1 30); do
@@ -14,9 +14,10 @@ for i in $(seq 1 30); do
 done
 
 # Login
+LOGIN_PAYLOAD=$(python3 -c "import json,sys; print(json.dumps({'email':sys.argv[1],'password':sys.argv[2]}))" "$ADMIN_EMAIL" "$ADMIN_PASS")
 TOKEN=$(curl -s -X POST "$YDAPI_URL/api/v1/auth/login" \
   -H "Content-Type: application/json" \
-  -d "{\"email\":\"$ADMIN_EMAIL\",\"password\":\"$ADMIN_PASS\"}" \
+  -d "$LOGIN_PAYLOAD" \
   | python3 -c "import sys,json; print(json.load(sys.stdin)['data']['access_token'])" 2>/dev/null)
 
 if [ -z "$TOKEN" ]; then
