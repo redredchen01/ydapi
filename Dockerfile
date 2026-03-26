@@ -62,7 +62,7 @@ WORKDIR /app
 COPY --from=backend-builder --chown=ydapi:ydapi /app/ydapi /app/ydapi
 COPY --from=backend-builder --chown=ydapi:ydapi /app/backend/resources /app/resources
 RUN mkdir -p /app/data && chown ydapi:ydapi /app/data
-COPY sub2api/deploy/docker-entrypoint.sh /app/docker-entrypoint.sh
+COPY docker-entrypoint.sh /app/docker-entrypoint.sh
 RUN chmod +x /app/docker-entrypoint.sh
 
 EXPOSE 8080
