@@ -15,9 +15,21 @@ echo "========================================="
 # 检查 Docker
 if ! command -v docker &>/dev/null; then
     echo -e "${RED}Docker 未安装，正在安装...${NC}"
-    curl -fsSL https://get.docker.com | sh
-    systemctl enable docker
-    systemctl start docker
+    DOCKER_SCRIPT=$(mktemp)
+    curl -fsSL https://get.docker.com -o "$DOCKER_SCRIPT"
+    echo "Downloaded Docker install script to $DOCKER_SCRIPT"
+    echo "Please review before running: less $DOCKER_SCRIPT"
+    read -p "Install Docker now? [y/N] " -r
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        sh "$DOCKER_SCRIPT"
+        systemctl enable docker
+        systemctl start docker
+    else
+        echo "Aborted. Install Docker manually and re-run."
+        rm -f "$DOCKER_SCRIPT"
+        exit 1
+    fi
+    rm -f "$DOCKER_SCRIPT"
 fi
 
 if ! docker compose version &>/dev/null; then

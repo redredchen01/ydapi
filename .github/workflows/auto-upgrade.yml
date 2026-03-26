@@ -56,13 +56,21 @@ jobs:
             fi
           done
 
-      - name: Commit and push upgrade
+      - name: Create upgrade pull request
         if: steps.check.outputs.updated == 'true'
         env:
           OLD_VER: ${{ steps.check.outputs.old_ver }}
           NEW_VER: ${{ steps.check.outputs.new_ver }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          BRANCH="auto-upgrade/sub2api-${NEW_VER}"
           git config user.name "YDAPI Bot"
           git config user.email "bot@ydapi.local"
+          git checkout -b "$BRANCH"
           git commit -m "chore: upgrade sub2api ${OLD_VER} -> ${NEW_VER}"
-          git push
+          git push -u origin "$BRANCH"
+          gh pr create \
+            --title "chore: upgrade sub2api ${OLD_VER} -> ${NEW_VER}" \
+            --body "Automated sub2api upgrade. Please review before merging." \
+            --base main \
+            --head "$BRANCH"

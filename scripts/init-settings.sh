@@ -4,8 +4,8 @@
 # Auto-runs on reboot via cron
 
 YDAPI_URL="${YDAPI_URL:-http://127.0.0.1:8080}"
-ADMIN_EMAIL="${ADMIN_EMAIL:-admin@ydapi.local}"
-ADMIN_PASS="${ADMIN_PASS:-YDAPI@2026!Secure}"
+ADMIN_EMAIL="${ADMIN_EMAIL:?Set ADMIN_EMAIL}"
+ADMIN_PASS="${ADMIN_PASS:?Set ADMIN_PASS}"
 
 # Wait for service
 for i in $(seq 1 30); do
@@ -14,9 +14,10 @@ for i in $(seq 1 30); do
 done
 
 # Login
+LOGIN_PAYLOAD=$(python3 -c "import json,sys; print(json.dumps({'email':sys.argv[1],'password':sys.argv[2]}))" "$ADMIN_EMAIL" "$ADMIN_PASS")
 TOKEN=$(curl -s -X POST "$YDAPI_URL/api/v1/auth/login" \
   -H "Content-Type: application/json" \
-  -d "{\"email\":\"$ADMIN_EMAIL\",\"password\":\"$ADMIN_PASS\"}" \
+  -d "$LOGIN_PAYLOAD" \
   | python3 -c "import sys,json; print(json.load(sys.stdin)['data']['access_token'])" 2>/dev/null)
 
 if [ -z "$TOKEN" ]; then
@@ -31,15 +32,14 @@ svg='<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 80 80\" width=\"80\
 print(base64.b64encode(svg.encode()).decode())
 ")
 
-# Apply
-curl -s -X PUT "$YDAPI_URL/api/v1/admin/settings" \
+# Apply settings
+RESULT=$(curl -s -w "\n%{http_code}" -X PUT "$YDAPI_URL/api/v1/admin/settings" \
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
   -d "{
     \"site_name\":\"YDAPI\",
     \"site_subtitle\":\"Turn Your AI Subscriptions into API Power\",
     \"site_logo\":\"data:image/svg+xml;base64,$LOGO_B64\",
-    \"api_base_url\":\"https://187.77.133.54\",
     \"registration_enabled\":true,
     \"totp_enabled\":true,
     \"default_concurrency\":20,
@@ -49,6 +49,13 @@ curl -s -X PUT "$YDAPI_URL/api/v1/admin/settings" \
     \"fallback_model_anthropic\":\"claude-sonnet-4-20250514\",
     \"fallback_model_openai\":\"gpt-4.1\",
     \"fallback_model_gemini\":\"gemini-2.5-pro\"
-  }" > /dev/null 2>&1
+  }")
 
-echo "[$(date)] YDAPI settings applied"
+HTTP_CODE=$(echo "$RESULT" | tail -1)
+if [ "$HTTP_CODE" = "200" ]; then
+  echo "[$(date)] YDAPI settings applied"
+else
+  echo "[$(date)] YDAPI settings failed (HTTP $HTTP_CODE)"
+  echo "$RESULT" | head -1
+  exit 1
+fi

@@ -12,7 +12,16 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 ENV_FILE="${SCRIPT_DIR}/../.env.monitor"
 STATE_FILE="/tmp/ydapi-monitor-state"
 
-[ -f "$ENV_FILE" ] && source "$ENV_FILE"
+# Only source env file if it exists and is owned by current user with safe permissions
+if [ -f "$ENV_FILE" ]; then
+  PERMS=$(stat -f '%Lp' "$ENV_FILE" 2>/dev/null || stat -c '%a' "$ENV_FILE" 2>/dev/null)
+  OWNER=$(stat -f '%u' "$ENV_FILE" 2>/dev/null || stat -c '%u' "$ENV_FILE" 2>/dev/null)
+  if [ "$OWNER" = "$(id -u)" ] && [ "$PERMS" = "600" ] || [ "$PERMS" = "640" ]; then
+    source "$ENV_FILE"
+  else
+    echo "[$(date)] WARNING: Skipping $ENV_FILE — fix permissions: chmod 600 $ENV_FILE"
+  fi
+fi
 
 YDAPI_URL="${YDAPI_URL:-http://127.0.0.1:8080}"
 

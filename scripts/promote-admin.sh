@@ -6,9 +6,9 @@
 
 set -e
 
-YDAPI_URL="${YDAPI_URL:-https://187.77.133.54}"
-ADMIN_EMAIL="${ADMIN_EMAIL:-admin@ydapi.local}"
-ADMIN_PASS="${ADMIN_PASS:-YDAPI@2026!Secure}"
+YDAPI_URL="${YDAPI_URL:?Set YDAPI_URL (e.g. https://your-server)}"
+ADMIN_EMAIL="${ADMIN_EMAIL:?Set ADMIN_EMAIL}"
+ADMIN_PASS="${ADMIN_PASS:?Set ADMIN_PASS}"
 CURL="curl -sk"
 
 EMAIL="$1"
@@ -18,18 +18,21 @@ if [ -z "$EMAIL" ]; then
 fi
 
 # Login as admin
+LOGIN_PAYLOAD=$(python3 -c "import json,sys; print(json.dumps({'email':sys.argv[1],'password':sys.argv[2]}))" "$ADMIN_EMAIL" "$ADMIN_PASS")
 TOKEN=$($CURL -X POST "$YDAPI_URL/api/v1/auth/login" \
   -H 'Content-Type: application/json' \
-  -d "{\"email\":\"$ADMIN_EMAIL\",\"password\":\"$ADMIN_PASS\"}" \
+  -d "$LOGIN_PAYLOAD" \
   | python3 -c "import sys,json; print(json.load(sys.stdin)['data']['access_token'])")
 
 # Find user by email
+export EMAIL_TO_FIND="$EMAIL"
 USER_ID=$($CURL "$YDAPI_URL/api/v1/admin/users?search=$EMAIL" \
   -H "Authorization: Bearer $TOKEN" \
   | python3 -c "
-import sys,json
+import sys,json,os
+email=os.environ['EMAIL_TO_FIND']
 users=json.load(sys.stdin)['data']['items']
-match=[u for u in users if u['email']=='$EMAIL']
+match=[u for u in users if u['email']==email]
 if match: print(match[0]['id'])
 else: print('NOT_FOUND')
 ")
@@ -50,9 +53,10 @@ $CURL -X PUT "$YDAPI_URL/api/v1/admin/users/$USER_ID" \
 echo "Promoted to admin"
 
 # Generate API keys for all groups
+USER_LOGIN_PAYLOAD=$(python3 -c "import json,sys; print(json.dumps({'email':sys.argv[1],'password':'__SKIP__'}))" "$EMAIL")
 USER_TOKEN=$($CURL -X POST "$YDAPI_URL/api/v1/auth/login" \
   -H 'Content-Type: application/json' \
-  -d "{\"email\":\"$EMAIL\",\"password\":\"__SKIP__\"}" 2>/dev/null \
+  -d "$USER_LOGIN_PAYLOAD" 2>/dev/null \
   | python3 -c "import sys,json; print(json.load(sys.stdin).get('data',{}).get('access_token',''))" 2>/dev/null || echo "")
 
 if [ -z "$USER_TOKEN" ]; then
@@ -70,10 +74,11 @@ else
       3) gname="gemini" ;;
       4) gname="antigravity" ;;
     esac
+    KEY_PAYLOAD=$(python3 -c "import json,sys; print(json.dumps({'name':sys.argv[1],'group_id':int(sys.argv[2])}))" "$gname" "$gid")
     KEY=$($CURL -X POST "$YDAPI_URL/api/v1/keys" \
       -H "Authorization: Bearer $USER_TOKEN" \
       -H 'Content-Type: application/json' \
-      -d "{\"name\":\"$gname\",\"group_id\":$gid}" \
+      -d "$KEY_PAYLOAD" \
       | python3 -c "import sys,json; print(json.load(sys.stdin)['data']['key'])")
     echo "  $gname: $KEY"
   done
